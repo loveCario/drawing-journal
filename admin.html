@@ -34,7 +34,7 @@
     <div class="admin-card">
       <div class="main-toolbar">
         <span id="col-count"></span>
-        <button id="new-btn" class="btn-primary">+ 新建陈列栏</button>
+        <button id="new-btn" class="btn-primary">+ 新建记录</button>
       </div>
       <div id="col-list"></div>
     </div>
@@ -42,7 +42,7 @@
 
   <!-- 新建表单 -->
   <div id="new-form" class="admin-card hidden">
-    <h2>新建陈列栏</h2>
+    <h2>新建记录</h2>
 
     <label>标题 *</label>
     <input type="text" id="f-title" placeholder="例如：第一次练习线稿">
@@ -51,15 +51,15 @@
     <input type="date" id="f-date">
 
     <label>说明（选填）</label>
-    <textarea id="f-desc" rows="2" placeholder="这次练习的感受或说明"></textarea>
+    <textarea id="f-desc" rows="2" placeholder="这次练习的整体感受"></textarea>
 
     <label>自定义排序（数字小的排前面）</label>
     <input type="number" id="f-order" value="99" min="1">
 
-    <label>图片 *（可多选）</label>
+    <label>图片 *（可多选，选完后逐张填笔记）</label>
     <input type="file" id="f-images" accept="image/*" multiple>
 
-    <div id="preview-area"></div>
+    <div id="paintings-forms"></div>
 
     <div id="cover-row" class="hidden">
       <label>封面图</label>
@@ -74,6 +74,32 @@
     <div class="form-actions">
       <button id="form-cancel" class="btn-secondary">取消</button>
       <button id="form-submit" class="btn-primary">发布</button>
+    </div>
+  </div>
+
+  <!-- 编辑面板 -->
+  <div id="edit-panel" class="admin-card hidden">
+    <h2>编辑记录</h2>
+
+    <label>标题</label>
+    <input type="text" id="e-title">
+
+    <label>日期</label>
+    <input type="date" id="e-date">
+
+    <label>说明（选填）</label>
+    <textarea id="e-desc" rows="2"></textarea>
+
+    <div id="edit-paintings-list"></div>
+
+    <div id="edit-progress-bar" class="progress-bar hidden">
+      <div id="edit-progress-fill"></div>
+      <span id="edit-progress-text"></span>
+    </div>
+
+    <div class="form-actions">
+      <button id="edit-cancel" class="btn-secondary">取消</button>
+      <button id="edit-save"   class="btn-primary">保存</button>
     </div>
   </div>
 
