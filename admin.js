@@ -128,6 +128,7 @@ document.getElementById('f-images').addEventListener('change', e => {
         <input type="text"  class="pf-author"       placeholder="作者" value="小0.6">
         <input type="date"  class="pf-date"         value="${colDate}">
         <input type="text"  class="pf-inspiration"  placeholder="灵感来源（选填）">
+        <textarea           class="pf-difficulty"   placeholder="遇到的困难（选填）" rows="2"></textarea>
         <textarea           class="pf-gains"        placeholder="收获（选填）" rows="2"></textarea>
       </div>
     `;
@@ -178,6 +179,7 @@ document.getElementById('form-submit').addEventListener('click', async () => {
         author:      card.querySelector('.pf-author').value.trim() || '小0.6',
         date:        card.querySelector('.pf-date').value || date,
         inspiration: card.querySelector('.pf-inspiration').value.trim(),
+        difficulty:  card.querySelector('.pf-difficulty').value.trim(),
         gains:       card.querySelector('.pf-gains').value.trim(),
         tags:        readTags(card)
       });
@@ -240,8 +242,9 @@ function openEdit(colId) {
         <input type="text"  class="pf-name"        placeholder="画名（选填）"       value="${p.name || ''}">
         <input type="text"  class="pf-author"       placeholder="作者"              value="${p.author || '小0.6'}">
         <input type="date"  class="pf-date"                                          value="${p.date || col.date}">
-        <input type="text"  class="pf-inspiration"  placeholder="灵感来源（选填）"  value="${p.inspiration || ''}">
-        <textarea           class="pf-gains"        placeholder="收获（选填）" rows="2">${p.gains || ''}</textarea>
+        <input type="text"  class="pf-inspiration"  placeholder="灵感来源（选填）"    value="${p.inspiration || ''}">
+        <textarea           class="pf-difficulty"   placeholder="遇到的困难（选填）" rows="2">${p.difficulty || ''}</textarea>
+        <textarea           class="pf-gains"        placeholder="收获（选填）"       rows="2">${p.gains || ''}</textarea>
       </div>
     `;
     buildTagPicker(card.querySelector('.pf-fields'), p.tags || []);
@@ -271,6 +274,7 @@ document.getElementById('edit-save').addEventListener('click', async () => {
     col.paintings[i].author      = card.querySelector('.pf-author').value.trim() || '小0.6';
     col.paintings[i].date        = card.querySelector('.pf-date').value;
     col.paintings[i].inspiration = card.querySelector('.pf-inspiration').value.trim();
+    col.paintings[i].difficulty  = card.querySelector('.pf-difficulty').value.trim();
     col.paintings[i].gains       = card.querySelector('.pf-gains').value.trim();
     col.paintings[i].tags        = readTags(card);
   });

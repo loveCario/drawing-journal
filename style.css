@@ -451,6 +451,83 @@ body {
 }
 
 /* ══════════════════════════════
+   统计 + 成长对比
+══════════════════════════════ */
+
+.stats-bar {
+  text-align: center;
+  font-size: 13px;
+  color: var(--sub);
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+
+.stats-sep { margin: 0 10px; color: var(--border); }
+
+.compare-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.compare-arrow {
+  font-size: 22px;
+  color: var(--lavender);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.compare-inner {
+  display: block;
+  flex: 1;
+  text-decoration: none;
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: transform 0.22s, box-shadow 0.22s;
+  color: var(--text);
+}
+
+.compare-inner:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px var(--shadow);
+}
+
+.compare-tag {
+  padding: 5px 14px;
+  background: linear-gradient(135deg, var(--lavender), var(--pink));
+  color: white;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.compare-inner img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.compare-info { padding: 10px 14px 14px; }
+
+.compare-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.compare-date { font-size: 11px; color: var(--sub); }
+
+@media (max-width: 480px) {
+  .compare-wrap  { flex-direction: column; }
+  .compare-arrow { justify-content: center; transform: rotate(90deg); }
+}
+
+/* ══════════════════════════════
    标签筛选（画廊）
 ══════════════════════════════ */
 

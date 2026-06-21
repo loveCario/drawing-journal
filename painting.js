@@ -32,6 +32,7 @@ async function init() {
   set('note-author', painting.author);
   set('note-date', formatDate(painting.date));
   set('note-inspiration', painting.inspiration);
+  set('note-difficulty', painting.difficulty);
   set('note-gains', painting.gains);
 
   const tags = painting.tags || [];

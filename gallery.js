@@ -13,8 +13,54 @@ async function init() {
   const titleEl = document.getElementById('site-title');
   if (titleEl) titleEl.textContent = siteData.title;
 
+  renderStats();
   renderTagFilters();
   render();
+}
+
+// ── 统计 + 对比 ───────────────────────────
+
+function renderStats() {
+  const all = [];
+  (siteData.collections || []).forEach(col => {
+    getPaintings(col).forEach(p => {
+      const d = new Date(p.date || col.date);
+      if (!isNaN(d)) all.push({ col, p, date: d });
+    });
+  });
+
+  if (all.length === 0) return;
+
+  all.sort((a, b) => a.date - b.date);
+
+  const count = all.length;
+  const first = all[0];
+  const latest = all[all.length - 1];
+  const days = Math.max(1, Math.round((latest.date - first.date) / 86400000) + 1);
+
+  document.getElementById('stat-count').textContent = `共 ${count} 幅画`;
+  document.getElementById('stat-days').textContent  = `已坚持 ${days} 天`;
+  document.getElementById('stats-bar').classList.remove('hidden');
+
+  if (count >= 2) {
+    document.getElementById('compare-first').innerHTML  = compareCardHTML(first.col,  first.p,  '最初');
+    document.getElementById('compare-latest').innerHTML = compareCardHTML(latest.col, latest.p, '最新');
+    document.getElementById('compare-section').classList.remove('hidden');
+  }
+}
+
+function compareCardHTML(col, p, label) {
+  const name = p.name || col.title;
+  const date = formatDate(p.date || col.date);
+  return `
+    <a href="painting.html?col=${col.id}&id=${p.id}" class="compare-inner">
+      <div class="compare-tag">${label}</div>
+      <img src="images/${p.image}" alt="${name}">
+      <div class="compare-info">
+        <div class="compare-title">${name}</div>
+        <div class="compare-date">${date}</div>
+      </div>
+    </a>`;
 }
 
 // ── 标签 ──────────────────────────────────
