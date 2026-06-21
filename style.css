@@ -449,3 +449,120 @@ body {
 
   .header-title { font-size: 13px; }
 }
+
+/* ══════════════════════════════
+   画作详情页
+══════════════════════════════ */
+
+.painting-main {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 36px 24px 60px;
+}
+
+.painting-image-wrap {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.painting-img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--shadow);
+  cursor: zoom-in;
+  transition: transform 0.2s;
+}
+
+.painting-img:hover { transform: scale(1.01); }
+
+.painting-img-hint {
+  font-size: 11px;
+  color: var(--sub);
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+.painting-notes {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.note-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.note-row:last-child { border-bottom: none; }
+
+.note-block { align-items: flex-start; flex-direction: column; gap: 6px; }
+
+.note-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--lavender);
+  letter-spacing: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.note-block .note-label { margin-bottom: 2px; }
+
+.note-value {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* 画作详情页的小窗灯箱 */
+.page-painting .lightbox {
+  align-items: center;
+  justify-content: center;
+}
+
+.lb-card {
+  position: relative;
+  z-index: 1;
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+  max-width: min(500px, 90vw);
+  animation: popIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.lb-card #lb-img {
+  position: static;
+  max-width: 100%;
+  max-height: 65vh;
+  border-radius: 10px;
+  box-shadow: none;
+  display: block;
+}
+
+.lb-card .lb-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  background: white;
+  color: var(--sub);
+  border: 1px solid var(--border);
+  backdrop-filter: none;
+}
+
+.lb-card .lb-close:hover { background: #FFF0F5; color: var(--text); }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.82); }
+  to   { opacity: 1; transform: scale(1); }
+}
