@@ -146,7 +146,8 @@ function renderFiltered(tag) {
 function createColCard(col, delay) {
   const a = document.createElement('a');
   a.className = 'collection-card';
-  const firstPainting = (col.paintings || [])[0];
+  const paintings = getPaintings(col);
+  const firstPainting = paintings[0];
   a.href = firstPainting
     ? `painting.html?col=${col.id}&id=${firstPainting.id}`
     : '#';
@@ -168,7 +169,7 @@ function createColCard(col, delay) {
 
   const count = document.createElement('span');
   count.className = 'card-count';
-  count.textContent = `${(col.paintings || []).length} 张`;
+  count.textContent = `${getPaintings(col).length} 张`;
   cover.appendChild(count);
 
   const info = document.createElement('div');
@@ -205,6 +206,14 @@ function createPaintingCard(col, painting, delay) {
   a.appendChild(cover);
   a.appendChild(info);
   return a;
+}
+
+function getPaintings(col) {
+  if (col.paintings && col.paintings.length > 0) return col.paintings;
+  return (col.images || []).map((img, i) => ({
+    id: `${col.id}_${i}`, image: img, name: '', author: '小0.6',
+    date: col.date, inspiration: '', gains: '', tags: []
+  }));
 }
 
 function formatDate(str) {

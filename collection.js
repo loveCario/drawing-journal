@@ -30,7 +30,12 @@ async function init() {
     descEl.remove();
   }
 
-  const paintings = col.paintings || [];
+  const paintings = col.paintings && col.paintings.length > 0
+    ? col.paintings
+    : (col.images || []).map((img, i) => ({
+        id: `${col.id}_${i}`, image: img, name: '', author: '小0.6',
+        date: col.date, inspiration: '', gains: '', tags: []
+      }));
   const grid = document.getElementById('images-grid');
 
   if (paintings.length === 0) {
