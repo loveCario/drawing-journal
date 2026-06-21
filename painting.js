@@ -25,7 +25,7 @@ async function init() {
   document.getElementById('painting-name').textContent = name;
 
   const img = document.getElementById('painting-img');
-  img.src = `images/${painting.image}`;
+  img.src = painting.image && painting.image.startsWith('http') ? painting.image : `images/${painting.image}`;
   img.alt = name;
 
   set('note-name', painting.name);

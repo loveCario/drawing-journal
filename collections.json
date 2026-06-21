@@ -60,6 +60,132 @@
           "tags": []
         }
       ]
+    },
+    {
+      "id": "TEST_001",
+      "title": "【测试】线稿入门练习",
+      "date": "2026-01-10",
+      "order": 1,
+      "description": "测试占位数据，确认版面后删除",
+      "cover": "https://picsum.photos/seed/art01/400/400",
+      "paintings": [
+        {
+          "id": "TEST_001_0",
+          "image": "https://picsum.photos/seed/art01/400/500",
+          "name": "测试画作 · 线稿练习",
+          "author": "小0.6",
+          "inspiration": "测试灵感来源文字",
+          "difficulty": "测试遇到的困难文字",
+          "date": "2026-01-10",
+          "gains": "测试收获文字",
+          "tags": ["线稿", "临摹"]
+        }
+      ]
+    },
+    {
+      "id": "TEST_002",
+      "title": "【测试】第一次尝试上色",
+      "date": "2026-02-14",
+      "order": 2,
+      "description": "测试占位数据，确认版面后删除",
+      "cover": "https://picsum.photos/seed/art02/400/400",
+      "paintings": [
+        {
+          "id": "TEST_002_0",
+          "image": "https://picsum.photos/seed/art02/400/500",
+          "name": "测试画作 · 上色练习",
+          "author": "小0.6",
+          "inspiration": "测试灵感来源文字",
+          "difficulty": "测试遇到的困难文字",
+          "date": "2026-02-14",
+          "gains": "测试收获文字",
+          "tags": ["上色"]
+        }
+      ]
+    },
+    {
+      "id": "TEST_003",
+      "title": "【测试】临摹大师作品",
+      "date": "2026-03-22",
+      "order": 3,
+      "description": "测试占位数据，确认版面后删除",
+      "cover": "https://picsum.photos/seed/art03/400/400",
+      "paintings": [
+        {
+          "id": "TEST_003_0",
+          "image": "https://picsum.photos/seed/art03/400/500",
+          "name": "测试画作 · 临摹练习",
+          "author": "小0.6",
+          "inspiration": "测试灵感来源文字",
+          "difficulty": "测试遇到的困难文字",
+          "date": "2026-03-22",
+          "gains": "测试收获文字",
+          "tags": ["临摹"]
+        }
+      ]
+    },
+    {
+      "id": "TEST_004",
+      "title": "【测试】原创角色设计",
+      "date": "2026-04-05",
+      "order": 4,
+      "description": "测试占位数据，确认版面后删除",
+      "cover": "https://picsum.photos/seed/art04/400/400",
+      "paintings": [
+        {
+          "id": "TEST_004_0",
+          "image": "https://picsum.photos/seed/art04/400/500",
+          "name": "测试画作 · 原创设计",
+          "author": "小0.6",
+          "inspiration": "测试灵感来源文字",
+          "difficulty": "测试遇到的困难文字",
+          "date": "2026-04-05",
+          "gains": "测试收获文字",
+          "tags": ["原创"]
+        }
+      ]
+    },
+    {
+      "id": "TEST_005",
+      "title": "【测试】色彩搭配研究",
+      "date": "2026-05-18",
+      "order": 5,
+      "description": "测试占位数据，确认版面后删除",
+      "cover": "https://picsum.photos/seed/art05/400/400",
+      "paintings": [
+        {
+          "id": "TEST_005_0",
+          "image": "https://picsum.photos/seed/art05/400/500",
+          "name": "测试画作 · 色彩练习",
+          "author": "小0.6",
+          "inspiration": "测试灵感来源文字",
+          "difficulty": "测试遇到的困难文字",
+          "date": "2026-05-18",
+          "gains": "测试收获文字",
+          "tags": ["上色"]
+        }
+      ]
+    },
+    {
+      "id": "TEST_006",
+      "title": "【测试】人物比例练习",
+      "date": "2026-06-01",
+      "order": 6,
+      "description": "测试占位数据，确认版面后删除",
+      "cover": "https://picsum.photos/seed/art06/400/400",
+      "paintings": [
+        {
+          "id": "TEST_006_0",
+          "image": "https://picsum.photos/seed/art06/400/500",
+          "name": "测试画作 · 人物练习",
+          "author": "小0.6",
+          "inspiration": "测试灵感来源文字",
+          "difficulty": "测试遇到的困难文字",
+          "date": "2026-06-01",
+          "gains": "测试收获文字",
+          "tags": ["线稿", "原创"]
+        }
+      ]
     }
   ]
 }

@@ -50,7 +50,7 @@ async function init() {
     a.style.animationDelay = `${i * 0.05}s`;
 
     const img = document.createElement('img');
-    img.src = `images/${p.image}`;
+    img.src = p.image && p.image.startsWith('http') ? p.image : `images/${p.image}`;
     img.alt = p.name || col.title;
     img.loading = 'lazy';
 

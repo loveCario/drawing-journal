@@ -55,7 +55,7 @@ function compareCardHTML(col, p, label) {
   return `
     <a href="painting.html?col=${col.id}&id=${p.id}" class="compare-inner">
       <div class="compare-tag">${label}</div>
-      <img src="images/${p.image}" alt="${name}">
+      <img src="${imgSrc(p.image)}" alt="${name}">
       <div class="compare-info">
         <div class="compare-title">${name}</div>
         <div class="compare-date">${date}</div>
@@ -204,7 +204,7 @@ function createColCard(col, delay) {
 
   if (col.cover) {
     const img = document.createElement('img');
-    img.src = `images/${col.cover}`;
+    img.src = imgSrc(col.cover);
     img.alt = col.title;
     img.loading = 'lazy';
     cover.appendChild(img);
@@ -237,7 +237,7 @@ function createPaintingCard(col, painting, delay) {
   const cover = document.createElement('div');
   cover.className = 'card-cover';
   const img = document.createElement('img');
-  img.src = `images/${painting.image}`;
+  img.src = imgSrc(painting.image);
   img.alt = painting.name || col.title;
   img.loading = 'lazy';
   cover.appendChild(img);
@@ -252,6 +252,11 @@ function createPaintingCard(col, painting, delay) {
   a.appendChild(cover);
   a.appendChild(info);
   return a;
+}
+
+function imgSrc(path) {
+  if (!path) return '';
+  return path.startsWith('http') ? path : `images/${path}`;
 }
 
 function getPaintings(col) {
