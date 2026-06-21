@@ -1,12 +1,26 @@
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
-const col = SITE_DATA.collections.find(c => c.id === id);
 
-if (!col) {
-  document.querySelector('.collection-main').innerHTML =
-    '<p style="text-align:center;padding:60px;color:#aaa">找不到这个陈列栏</p>';
-} else {
-  document.title = col.title + ' — ' + SITE_DATA.title;
+async function init() {
+  let siteData;
+  try {
+    const res = await fetch('collections.json?t=' + Date.now());
+    siteData = await res.json();
+  } catch (e) {
+    document.querySelector('.collection-main').innerHTML =
+      '<p style="text-align:center;padding:60px;color:#aaa">加载失败，请刷新重试</p>';
+    return;
+  }
+
+  const col = (siteData.collections || []).find(c => c.id === id);
+
+  if (!col) {
+    document.querySelector('.collection-main').innerHTML =
+      '<p style="text-align:center;padding:60px;color:#aaa">找不到这个陈列栏</p>';
+    return;
+  }
+
+  document.title = col.title + ' — ' + siteData.title;
   document.getElementById('col-title').textContent = col.title;
   document.getElementById('col-date').textContent = formatDate(col.date);
 
@@ -24,18 +38,15 @@ if (!col) {
     const item = document.createElement('div');
     item.className = 'image-item';
     item.style.animationDelay = `${i * 0.05}s`;
-
     const img = document.createElement('img');
     img.src = `images/${file}`;
     img.alt = `${col.title} ${i + 1}`;
     img.loading = 'lazy';
     img.addEventListener('click', () => openLightbox(i));
-
     item.appendChild(img);
     grid.appendChild(item);
   });
 
-  // 灯箱
   let current = 0;
   const lightbox = document.getElementById('lightbox');
   const lbImg    = document.getElementById('lb-img');
@@ -64,9 +75,9 @@ if (!col) {
 
   document.addEventListener('keydown', e => {
     if (lightbox.classList.contains('hidden')) return;
-    if (e.key === 'Escape')      closeLightbox();
-    if (e.key === 'ArrowLeft')   go(-1);
-    if (e.key === 'ArrowRight')  go(1);
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  go(-1);
+    if (e.key === 'ArrowRight') go(1);
   });
 
   if (images.length <= 1) {
@@ -80,3 +91,5 @@ function formatDate(str) {
   const [y, m, d] = str.split('-');
   return `${y} 年 ${parseInt(m)} 月 ${parseInt(d)} 日`;
 }
+
+init();

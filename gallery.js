@@ -1,11 +1,21 @@
-const titleEl = document.getElementById('site-title');
-if (titleEl) titleEl.textContent = SITE_DATA.title;
-document.title = SITE_DATA.title;
-
+let siteData = null;
 let currentSort = 'date';
 
+async function init() {
+  try {
+    const res = await fetch('collections.json?t=' + Date.now());
+    siteData = await res.json();
+  } catch (e) {
+    siteData = { title: '学画成长记录', tagline: '', collections: [] };
+  }
+  document.title = siteData.title;
+  const titleEl = document.getElementById('site-title');
+  if (titleEl) titleEl.textContent = siteData.title;
+  render();
+}
+
 function getSorted() {
-  const list = [...SITE_DATA.collections];
+  const list = [...(siteData.collections || [])];
   if (currentSort === 'date') {
     return list.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
@@ -48,33 +58,32 @@ function createCard(col, delay) {
 }
 
 function render() {
-  const sorted = getSorted();
+  const sorted      = getSorted();
   const featuredGrid = document.getElementById('featured-grid');
   const archiveGrid  = document.getElementById('archive-grid');
   const emptyState   = document.getElementById('empty-state');
   const archiveSec   = document.getElementById('archive-section');
+  const featuredSec  = document.getElementById('featured-section');
 
   featuredGrid.innerHTML = '';
   archiveGrid.innerHTML  = '';
 
   if (sorted.length === 0) {
     emptyState.classList.remove('hidden');
-    document.getElementById('featured-section').style.display = 'none';
-    archiveSec.style.display = 'none';
+    featuredSec.style.display = 'none';
+    archiveSec.style.display  = 'none';
     return;
   }
 
   emptyState.classList.add('hidden');
-  document.getElementById('featured-section').style.display = '';
+  featuredSec.style.display = '';
 
-  const featured = sorted.slice(0, 5);
-  const archive  = sorted.slice(5);
+  sorted.slice(0, 5).forEach((col, i) => featuredGrid.appendChild(createCard(col, i)));
 
-  featured.forEach((col, i) => featuredGrid.appendChild(createCard(col, i)));
-
-  if (archive.length > 0) {
+  const rest = sorted.slice(5);
+  if (rest.length > 0) {
     archiveSec.style.display = '';
-    archive.forEach((col, i) => archiveGrid.appendChild(createCard(col, i)));
+    rest.forEach((col, i) => archiveGrid.appendChild(createCard(col, i)));
   } else {
     archiveSec.style.display = 'none';
   }
@@ -95,4 +104,4 @@ document.querySelectorAll('.sort-btn').forEach(btn => {
   });
 });
 
-render();
+init();

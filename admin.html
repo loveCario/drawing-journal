@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="page-admin">
+
+  <header class="admin-header">
+    <a href="gallery.html" class="header-back">← 回到画廊</a>
+    <h1>管理后台</h1>
+    <span id="github-status"></span>
+  </header>
+
+  <!-- 第一步：连接 GitHub -->
+  <div id="token-section" class="admin-card">
+    <h2>连接 GitHub</h2>
+    <p>需要一个 GitHub Token 才能发布内容。<br>
+       <a id="token-link" href="#" target="_blank">点这里生成 Token →</a>
+       （页面打开后直接滚到底部点绿色按钮，复制生成的字符串）
+    </p>
+    <div class="token-row">
+      <input type="password" id="token-input" placeholder="粘贴 Token 到这里">
+      <button id="token-btn" class="btn-primary">连接</button>
+    </div>
+    <p class="tip">Token 只保存在你自己的浏览器里，不会泄露</p>
+  </div>
+
+  <!-- 主界面 -->
+  <div id="admin-main" class="hidden">
+    <div class="admin-card">
+      <div class="main-toolbar">
+        <span id="col-count"></span>
+        <button id="new-btn" class="btn-primary">+ 新建陈列栏</button>
+      </div>
+      <div id="col-list"></div>
+    </div>
+  </div>
+
+  <!-- 新建表单 -->
+  <div id="new-form" class="admin-card hidden">
+    <h2>新建陈列栏</h2>
+
+    <label>标题 *</label>
+    <input type="text" id="f-title" placeholder="例如：第一次练习线稿">
+
+    <label>日期 *</label>
+    <input type="date" id="f-date">
+
+    <label>说明（选填）</label>
+    <textarea id="f-desc" rows="2" placeholder="这次练习的感受或说明"></textarea>
+
+    <label>自定义排序（数字小的排前面）</label>
+    <input type="number" id="f-order" value="99" min="1">
+
+    <label>图片 *（可多选）</label>
+    <input type="file" id="f-images" accept="image/*" multiple>
+
+    <div id="preview-area"></div>
+
+    <div id="cover-row" class="hidden">
+      <label>封面图</label>
+      <select id="f-cover"></select>
+    </div>
+
+    <div id="progress-bar" class="progress-bar hidden">
+      <div id="progress-fill"></div>
+      <span id="progress-text"></span>
+    </div>
+
+    <div class="form-actions">
+      <button id="form-cancel" class="btn-secondary">取消</button>
+      <button id="form-submit" class="btn-primary">发布</button>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
