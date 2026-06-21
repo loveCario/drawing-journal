@@ -16,11 +16,14 @@
     <p class="landing-note">持续更新中 ✦</p>
   </div>
 
-  <script src="data.js"></script>
   <script>
-    document.getElementById('site-title').textContent = SITE_DATA.title;
-    document.getElementById('site-tagline').textContent = SITE_DATA.tagline;
-    document.title = SITE_DATA.title;
+    fetch('collections.json?t=' + Date.now())
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('site-title').textContent = data.title;
+        document.getElementById('site-tagline').textContent = data.tagline;
+        document.title = data.title;
+      });
   </script>
 </body>
 </html>
