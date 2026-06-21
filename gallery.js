@@ -25,7 +25,10 @@ function getSorted() {
 function createCard(col, delay) {
   const a = document.createElement('a');
   a.className = 'collection-card';
-  a.href = `collection.html?id=${col.id}`;
+  const firstPainting = (col.paintings || [])[0];
+  a.href = firstPainting
+    ? `painting.html?col=${col.id}&id=${firstPainting.id}`
+    : `collection.html?id=${col.id}`;
   a.style.animationDelay = `${delay * 0.07}s`;
 
   const cover = document.createElement('div');
@@ -44,7 +47,7 @@ function createCard(col, delay) {
 
   const count = document.createElement('span');
   count.className = 'card-count';
-  count.textContent = `${(col.images || []).length} 张`;
+  count.textContent = `${(col.paintings || []).length} 张`;
   cover.appendChild(count);
 
   const info = document.createElement('div');

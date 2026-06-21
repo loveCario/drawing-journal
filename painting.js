@@ -14,7 +14,7 @@ async function init() {
   const col = (siteData.collections || []).find(c => c.id === colId);
   if (!col) return;
 
-  document.getElementById('back-btn').href = `collection.html?id=${colId}`;
+  document.getElementById('back-btn').href = 'gallery.html';
 
   const paintings = col.paintings || [];
   const painting = paintings.find(p => p.id === paintingId);
