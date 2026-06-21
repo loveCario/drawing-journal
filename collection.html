@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>陈列栏</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-collection">
+
+  <header class="collection-header">
+    <a href="gallery.html" class="header-back">← 返回画廊</a>
+    <div class="collection-header-info">
+      <h1 id="col-title"></h1>
+      <span id="col-date"></span>
+    </div>
+  </header>
+
+  <main class="collection-main">
+    <p id="col-desc" class="col-desc"></p>
+    <div id="images-grid" class="images-grid"></div>
+  </main>
+
+  <!-- 灯箱 -->
+  <div id="lightbox" class="lightbox hidden">
+    <div class="lb-overlay"></div>
+    <button class="lb-close">✕</button>
+    <button class="lb-prev">‹</button>
+    <button class="lb-next">›</button>
+    <img id="lb-img" src="" alt="">
+  </div>
+
+  <script src="data.js"></script>
+  <script src="collection.js"></script>
+</body>
+</html>

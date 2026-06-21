@@ -6,27 +6,21 @@
   <title>学画成长记录</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="page-landing">
 
-  <header>
-    <h1 id="site-title"></h1>
-    <p id="site-tagline"></p>
-  </header>
-
-  <main>
-    <div id="gallery" class="gallery-grid"></div>
-    <div id="empty-state" class="empty-state hidden">
-      <div class="empty-icon">🎨</div>
-      <h2>练习中，敬请期待~</h2>
-      <p>正在努力画画，第一张作品即将出现在这里<br>每一次练习都是进步的痕迹</p>
-    </div>
-  </main>
-
-  <footer>
-    <p>用 AI 工具独立完成 · 持续更新中 ✦</p>
-  </footer>
+  <div class="landing-wrap">
+    <div class="landing-deco">✦ &nbsp; ✦ &nbsp; ✦</div>
+    <h1 class="landing-title" id="site-title">学画成长记录</h1>
+    <p class="landing-tagline" id="site-tagline">记录我从 0 开始学画画的过程</p>
+    <a href="gallery.html" class="landing-btn">开启你的绘画之旅</a>
+    <p class="landing-note">持续更新中 ✦</p>
+  </div>
 
   <script src="data.js"></script>
-  <script src="main.js"></script>
+  <script>
+    document.getElementById('site-title').textContent = SITE_DATA.title;
+    document.getElementById('site-tagline').textContent = SITE_DATA.tagline;
+    document.title = SITE_DATA.title;
+  </script>
 </body>
 </html>

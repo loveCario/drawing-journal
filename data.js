@@ -1,17 +1,21 @@
-// ✏️ 在这里添加你的练习记录
-// 每次画完新练习，复制一个 { } 块加进 records 数组里就行
-// image 填图片文件名（放在 images 文件夹里），没有图片就填 ""
+// ✏️ 添加陈列栏：在 collections 数组里复制一个 { } 块填进去
+// cover: 封面图文件名（放在 images 文件夹）
+// images: 这个陈列栏里所有图片的文件名列表
+// order: 自定义排序数字，越小越靠前
 
 const SITE_DATA = {
   title: "学画成长记录",
-  tagline: "记录我从 0 开始学画画的过程 🎨",
+  tagline: "记录我从 0 开始学画画的过程",
 
-  records: [
-    // 示例（删掉前面的 // 就会显示）：
+  collections: [
     // {
-    //   date: "2026-06-20",
-    //   description: "第一次尝试画线稿，手抖了好多次",
-    //   image: "001.jpg"
+    //   id: "001",
+    //   title: "第一次练习线稿",
+    //   date: "2026-06-21",
+    //   cover: "001-cover.jpg",
+    //   images: ["001-a.jpg", "001-b.jpg"],
+    //   description: "第一次拿笔画画，歪歪扭扭的",
+    //   order: 1
     // },
   ]
 };

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>画廊</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-gallery">
+
+  <header class="gallery-header">
+    <a href="index.html" class="header-back">← 首页</a>
+    <h1 class="header-title" id="site-title"></h1>
+    <div class="sort-controls">
+      <button class="sort-btn active" data-sort="date">按日期</button>
+      <button class="sort-btn" data-sort="custom">自定义</button>
+    </div>
+  </header>
+
+  <main class="gallery-main">
+
+    <section id="featured-section">
+      <div class="section-label">✦ 最新练习</div>
+      <div id="featured-grid" class="cards-grid cards-featured"></div>
+    </section>
+
+    <section id="archive-section">
+      <div class="section-label">收藏夹</div>
+      <div id="archive-grid" class="cards-grid"></div>
+    </section>
+
+    <div id="empty-state" class="empty-state hidden">
+      <div class="empty-icon">🎨</div>
+      <h2>练习中，敬请期待~</h2>
+      <p>第一个陈列栏即将出现在这里</p>
+    </div>
+
+  </main>
+
+  <script src="data.js"></script>
+  <script src="gallery.js"></script>
+</body>
+</html>
