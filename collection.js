@@ -13,7 +13,6 @@ async function init() {
   }
 
   const col = (siteData.collections || []).find(c => c.id === id);
-
   if (!col) {
     document.querySelector('.collection-main').innerHTML =
       '<p style="text-align:center;padding:60px;color:#aaa">找不到这个陈列栏</p>';
@@ -31,59 +30,28 @@ async function init() {
     descEl.remove();
   }
 
-  const images = col.images || [];
+  const paintings = col.paintings || [];
   const grid = document.getElementById('images-grid');
 
-  images.forEach((file, i) => {
-    const item = document.createElement('div');
-    item.className = 'image-item';
-    item.style.animationDelay = `${i * 0.05}s`;
+  if (paintings.length === 0) {
+    grid.innerHTML = '<p style="text-align:center;color:#aaa;padding:40px">还没有画作</p>';
+    return;
+  }
+
+  paintings.forEach((p, i) => {
+    const a = document.createElement('a');
+    a.className = 'image-item';
+    a.href = `painting.html?col=${col.id}&id=${p.id}`;
+    a.style.animationDelay = `${i * 0.05}s`;
+
     const img = document.createElement('img');
-    img.src = `images/${file}`;
-    img.alt = `${col.title} ${i + 1}`;
+    img.src = `images/${p.image}`;
+    img.alt = p.name || col.title;
     img.loading = 'lazy';
-    img.addEventListener('click', () => openLightbox(i));
-    item.appendChild(img);
-    grid.appendChild(item);
+
+    a.appendChild(img);
+    grid.appendChild(a);
   });
-
-  let current = 0;
-  const lightbox = document.getElementById('lightbox');
-  const lbImg    = document.getElementById('lb-img');
-
-  function openLightbox(i) {
-    current = i;
-    lbImg.src = `images/${images[i]}`;
-    lightbox.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lightbox.classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  function go(dir) {
-    current = (current + dir + images.length) % images.length;
-    lbImg.src = `images/${images[current]}`;
-  }
-
-  document.querySelector('.lb-close').addEventListener('click', closeLightbox);
-  document.querySelector('.lb-overlay').addEventListener('click', closeLightbox);
-  document.querySelector('.lb-prev').addEventListener('click', () => go(-1));
-  document.querySelector('.lb-next').addEventListener('click', () => go(1));
-
-  document.addEventListener('keydown', e => {
-    if (lightbox.classList.contains('hidden')) return;
-    if (e.key === 'Escape')     closeLightbox();
-    if (e.key === 'ArrowLeft')  go(-1);
-    if (e.key === 'ArrowRight') go(1);
-  });
-
-  if (images.length <= 1) {
-    document.querySelector('.lb-prev').style.display = 'none';
-    document.querySelector('.lb-next').style.display = 'none';
-  }
 }
 
 function formatDate(str) {

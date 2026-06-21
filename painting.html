@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作品详情</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-painting">
+
+  <header class="collection-header">
+    <a id="back-btn" href="gallery.html" class="header-back">← 返回陈列栏</a>
+    <div class="collection-header-info">
+      <h1 id="painting-name">作品</h1>
+    </div>
+    <div style="width:80px"></div>
+  </header>
+
+  <main class="painting-main">
+    <div class="painting-image-wrap">
+      <img id="painting-img" src="" alt="" class="painting-img" title="点击放大">
+      <p class="painting-img-hint">点击图片可放大查看</p>
+    </div>
+
+    <div class="painting-notes">
+      <div class="note-row">
+        <span class="note-label">画名</span>
+        <span class="note-value" id="note-name">—</span>
+      </div>
+      <div class="note-row">
+        <span class="note-label">作者</span>
+        <span class="note-value" id="note-author">—</span>
+      </div>
+      <div class="note-row">
+        <span class="note-label">日期</span>
+        <span class="note-value" id="note-date">—</span>
+      </div>
+      <div class="note-row note-block">
+        <span class="note-label">灵感来源</span>
+        <span class="note-value" id="note-inspiration">—</span>
+      </div>
+      <div class="note-row note-block">
+        <span class="note-label">收获</span>
+        <span class="note-value" id="note-gains">—</span>
+      </div>
+    </div>
+  </main>
+
+  <div id="lightbox" class="lightbox hidden">
+    <div class="lb-overlay"></div>
+    <button class="lb-close">✕</button>
+    <img id="lb-img" src="" alt="">
+  </div>
+
+  <script src="painting.js"></script>
+</body>
+</html>
