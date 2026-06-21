@@ -1,5 +1,17 @@
 {
   "title": "学画成长记录",
   "tagline": "记录我从 0 开始学画画的过程",
-  "collections": []
+  "collections": [
+    {
+      "id": "1782026171876",
+      "title": "五条猫猫",
+      "date": "2026-06-21",
+      "order": 99,
+      "description": "还没开始",
+      "cover": "1782026171876-0.jpg",
+      "images": [
+        "1782026171876-0.jpg"
+      ]
+    }
+  ]
 }
