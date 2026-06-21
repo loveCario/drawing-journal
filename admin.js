@@ -1,5 +1,6 @@
-const REPO = 'loveCario/drawing-journal';
-const API  = 'https://api.github.com';
+const REPO        = 'loveCario/drawing-journal';
+const API         = 'https://api.github.com';
+const PRESET_TAGS = ['线稿', '上色', '临摹', '原创'];
 
 let token        = localStorage.getItem('gh_token') || '';
 let siteData     = null;
@@ -130,6 +131,7 @@ document.getElementById('f-images').addEventListener('change', e => {
         <textarea           class="pf-gains"        placeholder="收获（选填）" rows="2"></textarea>
       </div>
     `;
+    buildTagPicker(card.querySelector('.pf-fields'), []);
     pfArea.appendChild(card);
   });
 
@@ -176,7 +178,8 @@ document.getElementById('form-submit').addEventListener('click', async () => {
         author:      card.querySelector('.pf-author').value.trim() || '小0.6',
         date:        card.querySelector('.pf-date').value || date,
         inspiration: card.querySelector('.pf-inspiration').value.trim(),
-        gains:       card.querySelector('.pf-gains').value.trim()
+        gains:       card.querySelector('.pf-gains').value.trim(),
+        tags:        readTags(card)
       });
     }
 
@@ -241,6 +244,7 @@ function openEdit(colId) {
         <textarea           class="pf-gains"        placeholder="收获（选填）" rows="2">${p.gains || ''}</textarea>
       </div>
     `;
+    buildTagPicker(card.querySelector('.pf-fields'), p.tags || []);
     list.appendChild(card);
   });
 
@@ -268,6 +272,7 @@ document.getElementById('edit-save').addEventListener('click', async () => {
     col.paintings[i].date        = card.querySelector('.pf-date').value;
     col.paintings[i].inspiration = card.querySelector('.pf-inspiration').value.trim();
     col.paintings[i].gains       = card.querySelector('.pf-gains').value.trim();
+    col.paintings[i].tags        = readTags(card);
   });
 
   const btn  = document.getElementById('edit-save');
@@ -337,6 +342,61 @@ async function ghGet(path) {
   });
   if (!res.ok) throw new Error(`获取 ${path} 失败`);
   return res.json();
+}
+
+// ── 标签选择器 ────────────────────────────
+
+function buildTagPicker(container, existingTags = []) {
+  const wrap = document.createElement('div');
+  wrap.className = 'pf-tag-row';
+
+  const picksWrap = document.createElement('div');
+  picksWrap.className = 'pf-tag-picks';
+
+  PRESET_TAGS.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tag-pick' + (existingTags.includes(tag) ? ' active' : '');
+    btn.dataset.tag = tag;
+    btn.textContent = tag;
+    btn.addEventListener('click', () => btn.classList.toggle('active'));
+    picksWrap.appendChild(btn);
+  });
+
+  existingTags.filter(t => !PRESET_TAGS.includes(t)).forEach(tag => {
+    picksWrap.appendChild(makeCustomTagBtn(tag, true));
+  });
+
+  const customInput = document.createElement('input');
+  customInput.type = 'text';
+  customInput.className = 'pf-tag-input';
+  customInput.placeholder = '自定义标签，回车添加';
+  customInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    const val = customInput.value.trim();
+    if (!val) return;
+    picksWrap.appendChild(makeCustomTagBtn(val, true));
+    customInput.value = '';
+  });
+
+  wrap.appendChild(picksWrap);
+  wrap.appendChild(customInput);
+  container.appendChild(wrap);
+}
+
+function makeCustomTagBtn(tag, active) {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'tag-pick' + (active ? ' active' : '');
+  btn.dataset.tag = tag;
+  btn.textContent = tag;
+  btn.addEventListener('click', () => btn.classList.toggle('active'));
+  return btn;
+}
+
+function readTags(card) {
+  return [...card.querySelectorAll('.tag-pick.active')].map(b => b.dataset.tag);
 }
 
 // ── 工具 ──────────────────────────────────

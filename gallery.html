@@ -19,6 +19,8 @@
 
   <main class="gallery-main">
 
+    <div id="tag-filter-row" class="tag-filter-row hidden"></div>
+
     <section id="featured-section">
       <div class="section-label">✦ 最新练习</div>
       <div id="featured-grid" class="cards-grid cards-featured"></div>
@@ -29,6 +31,11 @@
       <div id="archive-grid" class="cards-grid"></div>
     </section>
 
+    <section id="filtered-section" class="hidden">
+      <div class="section-label" id="filtered-label"></div>
+      <div id="filtered-grid" class="cards-grid cards-featured"></div>
+    </section>
+
     <div id="empty-state" class="empty-state hidden">
       <div class="empty-icon">🎨</div>
       <h2>练习中，敬请期待~</h2>
@@ -37,7 +44,6 @@
 
   </main>
 
-  <script src="data.js"></script>
   <script src="gallery.js"></script>
 </body>
 </html>

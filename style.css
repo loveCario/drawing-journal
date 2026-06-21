@@ -451,6 +451,60 @@ body {
 }
 
 /* ══════════════════════════════
+   标签筛选（画廊）
+══════════════════════════════ */
+
+.tag-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.tag-filter-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: transparent;
+  font-size: 12px;
+  color: var(--sub);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.tag-filter-btn:hover {
+  background: var(--lavender);
+  border-color: var(--lavender);
+  color: white;
+}
+
+.tag-filter-btn.active {
+  background: var(--lavender);
+  border-color: var(--lavender);
+  color: white;
+}
+
+/* 标签芯片（笔记页）*/
+
+.note-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-chip {
+  display: inline-block;
+  padding: 3px 12px;
+  background: linear-gradient(135deg, #EEE8F8, #FDE8EF);
+  color: var(--lavender);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+/* ══════════════════════════════
    画作详情页
 ══════════════════════════════ */
 

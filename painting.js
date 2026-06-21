@@ -34,6 +34,20 @@ async function init() {
   set('note-inspiration', painting.inspiration);
   set('note-gains', painting.gains);
 
+  const tags = painting.tags || [];
+  const tagsRow = document.getElementById('tags-row');
+  const tagsEl  = document.getElementById('note-tags');
+  if (tags.length === 0) {
+    tagsRow.style.display = 'none';
+  } else {
+    tags.forEach(tag => {
+      const chip = document.createElement('span');
+      chip.className = 'tag-chip';
+      chip.textContent = tag;
+      tagsEl.appendChild(chip);
+    });
+  }
+
   const lightbox = document.getElementById('lightbox');
   const lbImg = document.getElementById('lb-img');
 

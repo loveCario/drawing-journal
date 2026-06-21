@@ -250,6 +250,47 @@
 
 .pf-fields textarea { resize: vertical; }
 
+.pf-tag-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pf-tag-picks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-pick {
+  padding: 4px 12px;
+  border: 1px solid #DDD8EE;
+  border-radius: 14px;
+  background: transparent;
+  color: #9A8AAA;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.tag-pick:hover  { border-color: #C9B8E8; color: #C9B8E8; }
+.tag-pick.active { background: #C9B8E8; border-color: #C9B8E8; color: white; }
+
+.pf-tag-input {
+  width: 100%;
+  padding: 7px 12px;
+  border: 1px solid #EEE8F8;
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  color: #4A4060;
+  background: #FDFAFF;
+  outline: none;
+}
+
+.pf-tag-input:focus { border-color: #C9B8E8; }
+
 .empty-tip {
   text-align: center;
   color: #BBBBCC;
