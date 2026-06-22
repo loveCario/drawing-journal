@@ -176,15 +176,11 @@ body {
    陈列栏卡片
 ══════════════════════════════ */
 
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-}
-
+.cards-grid,
 .cards-featured {
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .collection-card {
@@ -215,9 +211,10 @@ body {
 
 .card-cover img {
   width: 100%; height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   transition: transform 0.35s;
+  padding: 4px;
 }
 
 .collection-card:hover .card-cover img {
@@ -439,7 +436,7 @@ body {
   .cards-grid,
   .cards-featured {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
 
   .images-grid {
