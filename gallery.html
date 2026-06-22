@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>画廊</title>
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body class="page-gallery">
 
@@ -25,36 +25,14 @@
       <span id="stat-days"></span>
     </div>
 
-    <section id="compare-section" class="hidden">
-      <div class="section-label">✦ 成长对比</div>
-      <div class="compare-wrap">
-        <div id="compare-first"></div>
-        <div class="compare-arrow">→</div>
-        <div id="compare-latest"></div>
-      </div>
-    </section>
-
     <div id="tag-filter-row" class="tag-filter-row hidden"></div>
 
-    <section id="featured-section">
-      <div class="section-label">✦ 最新练习</div>
-      <div id="featured-grid" class="cards-grid cards-featured"></div>
-    </section>
-
-    <section id="archive-section">
-      <div class="section-label">收藏夹</div>
-      <div id="archive-grid" class="cards-grid"></div>
-    </section>
-
-    <section id="filtered-section" class="hidden">
-      <div class="section-label" id="filtered-label"></div>
-      <div id="filtered-grid" class="cards-grid cards-featured"></div>
-    </section>
+    <div id="gallery-grid" class="gallery-grid"></div>
 
     <div id="empty-state" class="empty-state hidden">
       <div class="empty-icon">🎨</div>
       <h2>练习中，敬请期待~</h2>
-      <p>第一个陈列栏即将出现在这里</p>
+      <p>第一幅画即将出现在这里</p>
     </div>
 
   </main>

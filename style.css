@@ -456,6 +456,73 @@ body {
 }
 
 /* ══════════════════════════════
+   画廊网格
+══════════════════════════════ */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.painting-card {
+  display: block;
+  text-decoration: none;
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px var(--shadow);
+  transition: transform 0.22s, box-shadow 0.22s;
+  color: var(--text);
+  animation: fadeUp 0.4s ease both;
+}
+
+.painting-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px var(--shadow);
+}
+
+.painting-card-img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(135deg, #FFF0F5, #F0ECFF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.painting-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.painting-card-info {
+  padding: 10px 12px 12px;
+}
+
+.painting-card-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.painting-card-date {
+  font-size: 11px;
+  color: var(--sub);
+}
+
+@media (max-width: 768px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+
+/* ══════════════════════════════
    统计 + 成长对比
 ══════════════════════════════ */
 

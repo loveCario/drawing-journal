@@ -9,6 +9,7 @@ async function init() {
   } catch (e) {
     siteData = { title: '小0.6的画画成长之旅', tagline: '', collections: [] };
   }
+
   document.title = siteData.title;
   const titleEl = document.getElementById('site-title');
   if (titleEl) titleEl.textContent = siteData.title;
@@ -18,71 +19,52 @@ async function init() {
   render();
 }
 
-// ── 统计 + 对比 ───────────────────────────
+// ── 所有画作（展平） ──────────────────────
 
-function renderStats() {
-  const all = [];
+function getAllPaintings() {
+  const result = [];
   (siteData.collections || []).forEach(col => {
-    getPaintings(col).forEach(p => {
-      const d = new Date(p.date || col.date);
-      if (!isNaN(d)) all.push({ col, p, date: d });
-    });
+    getPaintings(col).forEach(p => result.push({ col, p }));
   });
-
-  if (all.length === 0) return;
-
-  all.sort((a, b) => a.date - b.date);
-
-  const count = all.length;
-  const first = all[0];
-  const latest = all[all.length - 1];
-  const days = Math.max(1, Math.round((latest.date - first.date) / 86400000) + 1);
-
-  document.getElementById('stat-count').textContent = `共 ${count} 幅画`;
-  document.getElementById('stat-days').textContent  = `已坚持 ${days} 天`;
-  document.getElementById('stats-bar').classList.remove('hidden');
-
-  if (count >= 2) {
-    document.getElementById('compare-first').innerHTML  = compareCardHTML(first.col,  first.p,  '最初');
-    document.getElementById('compare-latest').innerHTML = compareCardHTML(latest.col, latest.p, '最新');
-    document.getElementById('compare-section').classList.remove('hidden');
-  }
+  return result;
 }
 
-function compareCardHTML(col, p, label) {
-  const name = p.name || col.title;
-  const date = formatDate(p.date || col.date);
-  return `
-    <a href="painting.html?col=${col.id}&id=${p.id}" class="compare-inner">
-      <div class="compare-tag">${label}</div>
-      <img src="${imgSrc(p.image)}" alt="${name}">
-      <div class="compare-info">
-        <div class="compare-title">${name}</div>
-        <div class="compare-date">${date}</div>
-      </div>
-    </a>`;
+function getSorted(all) {
+  const list = [...all];
+  if (currentSort === 'date') {
+    return list.sort((a, b) => new Date(b.p.date || b.col.date) - new Date(a.p.date || a.col.date));
+  }
+  return list.sort((a, b) => (a.col.order ?? 999) - (b.col.order ?? 999));
+}
+
+// ── 统计 ──────────────────────────────────
+
+function renderStats() {
+  const all = getAllPaintings();
+  if (all.length === 0) return;
+
+  const dates = all.map(({ col, p }) => new Date(p.date || col.date)).filter(d => !isNaN(d));
+  const earliest = new Date(Math.min(...dates));
+  const latest   = new Date(Math.max(...dates));
+  const days = Math.max(1, Math.round((latest - earliest) / 86400000) + 1);
+
+  document.getElementById('stat-count').textContent = `共 ${all.length} 幅画`;
+  document.getElementById('stat-days').textContent  = `已坚持 ${days} 天`;
+  document.getElementById('stats-bar').classList.remove('hidden');
 }
 
 // ── 标签 ──────────────────────────────────
 
 function collectAllTags() {
   const set = new Set();
-  (siteData.collections || []).forEach(col => {
-    (col.paintings || []).forEach(p => {
-      (p.tags || []).forEach(t => set.add(t));
-    });
-  });
+  getAllPaintings().forEach(({ p }) => (p.tags || []).forEach(t => set.add(t)));
   return [...set];
 }
 
 function renderTagFilters() {
   const tags = collectAllTags();
   const row  = document.getElementById('tag-filter-row');
-
-  if (tags.length === 0) {
-    row.classList.add('hidden');
-    return;
-  }
+  if (tags.length === 0) { row.classList.add('hidden'); return; }
 
   row.classList.remove('hidden');
   row.innerHTML = '';
@@ -108,151 +90,61 @@ function setTag(tag) {
   render();
 }
 
-// ── 渲染 ──────────────────────────────────
-
-function getSorted() {
-  const list = [...(siteData.collections || [])];
-  if (currentSort === 'date') {
-    return list.sort((a, b) => new Date(b.date) - new Date(a.date));
-  }
-  return list.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
-}
+// ── 渲染网格 ──────────────────────────────
 
 function render() {
-  const featuredSec   = document.getElementById('featured-section');
-  const archiveSec    = document.getElementById('archive-section');
-  const filteredSec   = document.getElementById('filtered-section');
-  const emptyState    = document.getElementById('empty-state');
+  const grid       = document.getElementById('gallery-grid');
+  const emptyState = document.getElementById('empty-state');
+  grid.innerHTML   = '';
+
+  let all = getAllPaintings();
 
   if (activeTag !== null) {
-    featuredSec.style.display  = 'none';
-    archiveSec.style.display   = 'none';
-    filteredSec.classList.remove('hidden');
-    renderFiltered(activeTag);
-    emptyState.classList.add('hidden');
-    return;
+    all = all.filter(({ p }) => (p.tags || []).includes(activeTag));
   }
 
-  filteredSec.classList.add('hidden');
-  featuredSec.style.display = '';
-  archiveSec.style.display  = '';
-
-  const sorted       = getSorted();
-  const featuredGrid = document.getElementById('featured-grid');
-  const archiveGrid  = document.getElementById('archive-grid');
-  featuredGrid.innerHTML = '';
-  archiveGrid.innerHTML  = '';
+  const sorted = getSorted(all);
 
   if (sorted.length === 0) {
     emptyState.classList.remove('hidden');
-    featuredSec.style.display = 'none';
-    archiveSec.style.display  = 'none';
     return;
   }
 
   emptyState.classList.add('hidden');
-  sorted.slice(0, 5).forEach((col, i) => featuredGrid.appendChild(createColCard(col, i)));
 
-  const rest = sorted.slice(5);
-  if (rest.length > 0) {
-    rest.forEach((col, i) => archiveGrid.appendChild(createColCard(col, i)));
-    archiveSec.style.display = '';
-  } else {
-    archiveSec.style.display = 'none';
-  }
-}
-
-function renderFiltered(tag) {
-  const grid  = document.getElementById('filtered-grid');
-  const label = document.getElementById('filtered-label');
-  grid.innerHTML = '';
-  label.textContent = `✦ 标签：${tag}`;
-
-  const matches = [];
-  (siteData.collections || []).forEach(col => {
-    (col.paintings || []).forEach(p => {
-      if ((p.tags || []).includes(tag)) matches.push({ col, p });
-    });
-  });
-
-  matches.sort((a, b) => new Date(b.p.date || b.col.date) - new Date(a.p.date || a.col.date));
-
-  if (matches.length === 0) {
-    grid.innerHTML = '<p style="color:#aaa;font-size:13px;padding:20px 0">该标签下还没有画作</p>';
-    return;
-  }
-
-  matches.forEach(({ col, p }, i) => {
-    grid.appendChild(createPaintingCard(col, p, i));
+  sorted.forEach(({ col, p }, i) => {
+    grid.appendChild(createCard(col, p, i));
   });
 }
 
-// ── 卡片 ──────────────────────────────────
-
-function createColCard(col, delay) {
+function createCard(col, p, delay) {
   const a = document.createElement('a');
-  a.className = 'collection-card';
-  const paintings = getPaintings(col);
-  const firstPainting = paintings[0];
-  a.href = firstPainting
-    ? `painting.html?col=${col.id}&id=${firstPainting.id}`
-    : '#';
-  a.style.animationDelay = `${delay * 0.07}s`;
+  a.className = 'painting-card';
+  a.href = `painting.html?col=${col.id}&id=${p.id}`;
+  a.style.animationDelay = `${delay * 0.04}s`;
 
-  const cover = document.createElement('div');
-  cover.className = 'card-cover';
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'painting-card-img';
 
-  if (col.cover) {
-    const img = document.createElement('img');
-    img.src = imgSrc(col.cover);
-    img.alt = col.title;
-    img.loading = 'lazy';
-    cover.appendChild(img);
-  } else {
-    cover.classList.add('card-cover-placeholder');
-    cover.innerHTML = '<span>🎨</span>';
-  }
-
-  const count = document.createElement('span');
-  count.className = 'card-count';
-  count.textContent = `${getPaintings(col).length} 张`;
-  cover.appendChild(count);
-
-  const info = document.createElement('div');
-  info.className = 'card-info';
-  info.innerHTML = `<h3 class="card-title">${col.title}</h3>
-                    <span class="card-date">${formatDate(col.date)}</span>`;
-
-  a.appendChild(cover);
-  a.appendChild(info);
-  return a;
-}
-
-function createPaintingCard(col, painting, delay) {
-  const a = document.createElement('a');
-  a.className = 'collection-card';
-  a.href = `painting.html?col=${col.id}&id=${painting.id}`;
-  a.style.animationDelay = `${delay * 0.07}s`;
-
-  const cover = document.createElement('div');
-  cover.className = 'card-cover';
   const img = document.createElement('img');
-  img.src = imgSrc(painting.image);
-  img.alt = painting.name || col.title;
+  img.src     = imgSrc(p.image);
+  img.alt     = p.name || col.title;
   img.loading = 'lazy';
-  cover.appendChild(img);
+  imgWrap.appendChild(img);
 
   const info = document.createElement('div');
-  info.className = 'card-info';
+  info.className = 'painting-card-info';
   info.innerHTML = `
-    <h3 class="card-title">${painting.name || col.title}</h3>
-    <span class="card-date">${formatDate(painting.date || col.date)}</span>
+    <div class="painting-card-title">${p.name || col.title}</div>
+    <div class="painting-card-date">${formatDate(p.date || col.date)}</div>
   `;
 
-  a.appendChild(cover);
+  a.appendChild(imgWrap);
   a.appendChild(info);
   return a;
 }
+
+// ── 工具 ──────────────────────────────────
 
 function imgSrc(path) {
   if (!path) return '';
